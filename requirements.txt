@@ -5,7 +5,7 @@ ultralytics>=8.3.0
 mediapipe>=0.10.14
 
 # Vision / data
-opencv-python-headless>=4.9.0
+
 imageio-ffmpeg>=0.5.1  # bundles a static ffmpeg binary for browser-compatible H.264 mp4 output
 Pillow>=10.0.0
 numpy>=1.26.0
