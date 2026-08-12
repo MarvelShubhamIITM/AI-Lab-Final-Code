@@ -18,6 +18,7 @@ Public surface used from wellness_core.py:
     stop_live_session()                     -> final summary string
 """
 
+import os
 import re
 import traceback
 
@@ -400,4 +401,13 @@ with gr.Blocks(title="Driver Wellness AI") as demo:
 
 
 if __name__ == "__main__":
-    demo.queue().launch(theme=THEME, css=CUSTOM_CSS, head=HEAD_HTML, ssr_mode=False)
+    # Railway (and most non-HF-Spaces hosts) route traffic to $PORT on 0.0.0.0 --
+    # Gradio's default (127.0.0.1:7860) is unreachable from outside the container.
+    demo.queue().launch(
+        theme=THEME,
+        css=CUSTOM_CSS,
+        head=HEAD_HTML,
+        ssr_mode=False,
+        server_name="0.0.0.0",
+        server_port=int(os.environ.get("PORT", 7860)),
+    )
