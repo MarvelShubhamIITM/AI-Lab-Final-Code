@@ -1,0 +1,20 @@
+# Core inference stack
+torch>=2.2.0
+torchvision>=0.17.0
+ultralytics>=8.3.0
+mediapipe>=0.10.14
+
+# Vision / data
+opencv-python-headless>=4.9.0
+imageio-ffmpeg>=0.5.1  # bundles a static ffmpeg binary for browser-compatible H.264 mp4 output
+Pillow>=10.0.0
+numpy>=1.26.0
+pandas>=2.0.0
+tqdm>=4.66.0
+psutil>=5.9.0
+
+# UI
+gradio>=5.0
+
+# Hugging Face ZeroGPU decorator (no-op / harmless on CPU or standard GPU Spaces)
+spaces>=0.30.0
