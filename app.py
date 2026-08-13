@@ -146,6 +146,11 @@ body::after {
 #dw-header h1 {
     font-family: 'Orbitron', sans-serif; font-weight: 800; letter-spacing: 3px;
     font-size: 2.5rem; text-transform: uppercase; margin-bottom: 6px;
+    /* Solid fallback so the title is never invisible if the gradient-clip
+       trick below isn't rendered (unsupported browser/GPU context) -- the
+       background-clip declarations then just override this with the
+       animated gradient where supported. */
+    color: var(--dw-cyan);
     background: linear-gradient(90deg, var(--dw-indigo), var(--dw-cyan), var(--dw-rose), var(--dw-indigo));
     background-size: 300% auto;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
