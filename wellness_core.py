@@ -2407,6 +2407,20 @@ MODEL_REGISTRY = {
     },
 }
 
+def _is_git_lfs_pointer(path: str) -> bool:
+    """
+    True if `path` is an unresolved Git LFS pointer stub rather than the real
+    checkpoint (happens when a host's checkout doesn't smudge LFS files) --
+    catches the exact failure mode that made os.path.exists() alone report
+    "Available" for checkpoints that actually fail to load.
+    """
+    try:
+        with open(path, "rb") as f:
+            return f.read(64).startswith(b"version https://git-lfs.github.com/spec/v1")
+    except OSError:
+        return False
+
+
 system_status = []
 available_models = []
 
@@ -2415,7 +2429,7 @@ print("Driver Wellness AI - Model Availability")
 print("=" * 80)
 
 for module_key, module in MODEL_REGISTRY.items():
-    exists = os.path.exists(module["checkpoint"])
+    exists = os.path.exists(module["checkpoint"]) and not _is_git_lfs_pointer(module["checkpoint"])
     status = "Available" if exists else "Missing"
     icon = "✅" if exists else "❌"
 
