@@ -146,18 +146,18 @@ body::after {
 #dw-header h1 {
     font-family: 'Orbitron', sans-serif; font-weight: 800; letter-spacing: 3px;
     font-size: 2.5rem; text-transform: uppercase; margin-bottom: 6px;
-    /* Solid fallback so the title is never invisible if the gradient-clip
-       trick below isn't rendered (unsupported browser/GPU context) -- the
-       background-clip declarations then just override this with the
-       animated gradient where supported. */
+    /* Plain solid color + animated glow instead of a background-clip:text
+       gradient -- that technique left the title fully invisible in some
+       rendering contexts (transparent fill with no gradient showing through).
+       A real `color` value plus text-shadow has no such failure mode. */
     color: var(--dw-cyan);
-    background: linear-gradient(90deg, var(--dw-indigo), var(--dw-cyan), var(--dw-rose), var(--dw-indigo));
-    background-size: 300% auto;
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    animation: dw-gradient-shift 6s linear infinite;
-    filter: drop-shadow(0 0 18px rgba(99,102,241,0.45));
+    text-shadow: 0 0 18px rgba(99,102,241,0.65), 0 0 34px rgba(34,211,238,0.35);
+    animation: dw-title-glow 6s ease-in-out infinite;
 }
-@keyframes dw-gradient-shift { to { background-position: 300% center; } }
+@keyframes dw-title-glow {
+    0%, 100% { text-shadow: 0 0 18px rgba(99,102,241,0.65), 0 0 34px rgba(34,211,238,0.35); }
+    50%      { text-shadow: 0 0 22px rgba(34,211,238,0.75), 0 0 38px rgba(244,63,94,0.40); }
+}
 #dw-header p { color: var(--dw-text-dim); font-size: 0.95rem; letter-spacing: 0.4px; margin-top: 0; }
 
 /* ---------------- Status chips ---------------- */
